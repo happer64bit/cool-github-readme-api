@@ -3,7 +3,8 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/"
+            "destination": "express.js"
         }
-    ]
+    ],
+    "builds": [{ "src": "express.js", "use": "@vercel/node" }]
 }

@@ -1,12 +1,13 @@
 const { Router } = require("express");
 const fs = require('fs');
 const path = require('path');
+const cache = require("apicache").middleware;
 
 require('cachedfs').patchInPlace();
 
 const SteaksRouter = Router();
 
-SteaksRouter.get("/:username", async (req, res) => {
+SteaksRouter.get("/:username", cache("1 minutes"), async (req, res) => {
     const { username } = req.params;
     const {
         theme,
@@ -68,7 +69,7 @@ SteaksRouter.get("/:username", async (req, res) => {
         svgContent = svgContent.replace(/\$num/g, numberOfSteaks).replace(/\$size/g, size || 250);
 
         res.setHeader('Content-Type', 'image/svg+xml');
-        
+
         res.send(svgContent);
     } catch (error) {
         console.error('Error fetching contributions:', error);

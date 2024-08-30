@@ -2,14 +2,16 @@
   "name": "cool-github-readme-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "express.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apicache": "^1.6.3",
     "cachedfs": "^0.3.3",
     "express": "^4.19.2"
   }

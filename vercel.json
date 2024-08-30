@@ -6,5 +6,6 @@
             "destination": "express.js"
         }
     ],
-    "builds": [{ "src": "express.js", "use": "@vercel/node" }]
+    "builds": [{ "src": "express.js", "use": "@vercel/node" }],
+    "buildCommand": ""
 }

@@ -11,7 +11,7 @@ The Cool GitHub README API allows you to generate beautiful, informative, and en
 * You can customize by `https://cool-github-readme-api.vercel.app/steaks/<username>?theme=light&size=100`
 
 ```markdown
-![My Steaks](https://cool-github-readme-api.vercel.app/steaks/<username>)
+![My Steaks](https://cool-github-readme-api.vercel.app/steaks/<username>?theme=light&size=200)
 ```
 
 * Replace `<username>` with your GitHub username.

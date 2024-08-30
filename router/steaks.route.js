@@ -7,7 +7,7 @@ require('cachedfs').patchInPlace();
 
 const SteaksRouter = Router();
 
-SteaksRouter.get("/:username", cache("1 minutes"), async (req, res) => {
+SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
     const { username } = req.params;
     const {
         theme,

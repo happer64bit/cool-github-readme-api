@@ -10,7 +10,7 @@ const SteaksRouter = Router();
 SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
     const { username } = req.params;
     const {
-        theme,
+        theme = 'dark', // default to dark if theme is not provided
         size
     } = req.query;
 
@@ -28,7 +28,6 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
         function calculateStreaks(contributions) {
             if (contributions.length === 0) return 0;
         
-            // Extract unique dates and sort them in descending order
             const validContributions = contributions
                 .filter(contribution => new Date(contribution.date) <= new Date())
                 .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -50,11 +49,11 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
                         if (diff === 1 && nextContribution.count > 0) {
                             currentStreak++;
                         } else {
-                            break; // Break if the streak is broken
+                            break;
                         }
                     }
                     maxStreak = Math.max(maxStreak, currentStreak);
-                    break; // Exit after calculating the streak
+                    break;
                 }
             }
         
@@ -63,13 +62,13 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
 
         const numberOfSteaks = calculateStreaks(contributions);
 
-        const filePath = path.join(__dirname, './../assets/steaks/dark.svg');
+        const themeFile = theme === 'light' ? 'light.svg' : 'dark.svg';
+        const filePath = path.join(__dirname, `./../assets/steaks/${themeFile}`);
         let svgContent = fs.readFileSync(filePath, 'utf8');
 
         svgContent = svgContent.replace(/\$num/g, numberOfSteaks).replace(/\$size/g, size || 250);
 
         res.setHeader('Content-Type', 'image/svg+xml');
-
         res.send(svgContent);
     } catch (error) {
         console.error('Error fetching contributions:', error);

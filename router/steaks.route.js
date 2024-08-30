@@ -68,6 +68,7 @@ SteaksRouter.get("/:username", async (req, res) => {
         svgContent = svgContent.replace(/\$num/g, numberOfSteaks).replace(/\$size/g, size || 250);
 
         res.setHeader('Content-Type', 'image/svg+xml');
+        
         res.send(svgContent);
     } catch (error) {
         console.error('Error fetching contributions:', error);

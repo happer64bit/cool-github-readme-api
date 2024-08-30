@@ -1,8 +1,3 @@
-const express = require("express")
-const SteaksRouter = require("./router/steaks.route")
-
-const app = express()
-
-app.use("/steaks/", SteaksRouter);
+const app = require("./express");
 
 app.listen(5000)

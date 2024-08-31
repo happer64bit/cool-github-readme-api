@@ -63,7 +63,7 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
         const numberOfSteaks = calculateStreaks(contributions);
 
         const themeFile = theme === 'light' ? 'light.svg' : 'dark.svg';
-        const filePath = path.join(__dirname, `./../assets/steaks/${themeFile}`);
+        const filePath = path.join(__dirname, `./../assets/streak/${themeFile}`);
         let svgContent = fs.readFileSync(filePath, 'utf8');
 
         svgContent = svgContent.replace(/\$num/g, encodeURIComponent(numberOfSteaks))

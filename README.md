@@ -21,7 +21,7 @@ The Cool GitHub README API allows you to generate beautiful, informative, and en
 
 | Light | Dark  |
 | ---|---|
-| ![img](https://cool-github-readme-api.vercel.app/streak/happer64bit?theme=light)  |  ![img](https://cool-github-readme-api.vercel.app/steaks/happer64bit)  |
+| ![img](https://cool-github-readme-api.vercel.app/streak/happer64bit?theme=light)  |  ![img](https://cool-github-readme-api.vercel.app/steak/happer64bit)  |
 
 ## Release Download Count
 

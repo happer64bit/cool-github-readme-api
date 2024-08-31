@@ -1,5 +1,5 @@
 <svg width="540" height="176" viewBox="0 0 540 176" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="540" height="176" rx="20" fill="url(#paint0_linear_32_36)" />
+    <rect width="540" height="176" rx="20" fill="url(#paint0_linear_32_36)" $stroke />
     <text fill="url(#paint1_linear_32_36)" y="115" x="30" font-family="sans-serif" font-weight="600" font-size="60">
         $total_number
     </text>

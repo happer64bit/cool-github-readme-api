@@ -5,6 +5,6 @@ const totalDownloads = require("./router/total_downloads.route");
 const app = express()
 
 app.use("/steaks/", SteaksRouter);
-app.use("/total-downloads/", totalDownloads)
+app.use("/total-downloads/", totalDownloads);
 
 module.exports = app;

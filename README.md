@@ -11,7 +11,7 @@ The Cool GitHub README API allows you to generate beautiful, informative, and en
 * You can customize by `https://cool-github-readme-api.vercel.app/steaks/<username>?theme=light&size=100`
 
 ```markdown
-![My Steaks](https://cool-github-readme-api.vercel.app/steaks/<username>?theme=light&size=200)
+![My Steaks](https://cool-github-readme-api.vercel.app/steaks/<username>?theme=light&size=200?border=black)
 ```
 
 * Replace `<username>` with your GitHub username.
@@ -28,13 +28,14 @@ The Cool GitHub README API allows you to generate beautiful, informative, and en
 * You can customize by `https://cool-github-readme-api.vercel.app/steaks/<username>?theme=light&size=100`
 
 ```markdown
-![My Steaks](https://cool-github-readme-api.vercel.app/total-downloads/happer64bit/moviesharmal?theme=light)
+![My Steaks](https://cool-github-readme-api.vercel.app/total-downloads/happer64bit/moviesharmal?theme=light&border=#fff)
 ```
 
 * Replace `<username>` with your GitHub username.
 * Replace `<repo>` with your Repository.
 
 * `theme (dark default)` - light and dark is avaliable
+* `border (#797067 default)` - border for card
 
 |  Light  | Dark  |
 | ---|---|

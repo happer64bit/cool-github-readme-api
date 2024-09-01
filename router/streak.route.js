@@ -68,7 +68,7 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
 
         svgContent = svgContent.replace(/\$num/g, encodeURIComponent(numberOfSteaks))
                                .replace(/\$size/g, encodeURIComponent(size || 250))
-                               .replace(/\$stroke/g, `stroke=\"${encodeURIComponent(border)}\"`);
+                               .replace(/\$stroke/g, `stroke="${encodeURIComponent(border)}"`);
 
         res.setHeader('Content-Type', 'image/svg+xml');
         res.send(svgContent);

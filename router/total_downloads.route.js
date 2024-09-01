@@ -31,7 +31,7 @@ totalDownloads.get("/:username/:repo", cache("1 minute"), async (req, res) => {
         svgContent = svgContent
             .replace(/\$total_number/g, encodeURIComponent(totalDownloads))
             .replace(/\$repo/g, `${encodeURIComponent(username)} / ${encodeURIComponent(repo)}`)
-            .replace(/\$stroke/g, `stroke=\"${encodeURIComponent(border)}\"`);
+            .replace(/\$stroke/g, `stroke="${encodeURIComponent(border)}"`);
 
         res.setHeader('Content-Type', 'image/svg+xml');
         res.send(svgContent);

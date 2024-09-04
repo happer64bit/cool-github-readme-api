@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const cache = require("apicache").middleware;
 
@@ -9,15 +9,11 @@ const SteaksRouter = Router();
 
 SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
     const { username } = req.params;
-    const {
-        theme = 'dark',
-        size,
-        border = "797067"
-    } = req.query;
+    const { theme = 'dark', size, border = "797067" } = req.query;
 
     try {
+        // Fetch GitHub contribution data
         const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=2024`);
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -60,16 +56,21 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
             return maxStreak;
         }
 
-        const numberOfSteaks = calculateStreaks(contributions);
+        const numberOfStreaks = calculateStreaks(contributions);
 
+        // Select SVG theme
         const themeFile = theme === 'light' ? 'light.svg' : 'dark.svg';
         const filePath = path.join(__dirname, `./../assets/streak/${themeFile}`);
-        let svgContent = fs.readFileSync(filePath, 'utf8');
+        
+        // Read SVG file asynchronously
+        let svgContent = await fs.readFile(filePath, 'utf8');
 
-        svgContent = svgContent.replace(/\$num/g, encodeURIComponent(numberOfSteaks))
+        // Replace placeholders with actual data
+        svgContent = svgContent.replace(/\$num/g, encodeURIComponent(numberOfStreaks))
                                .replace(/\$size/g, encodeURIComponent(size || 250))
                                .replace(/\$stroke/g, `stroke="${encodeURIComponent(border)}"`);
 
+        // Send the modified SVG as a response
         res.setHeader('Content-Type', 'image/svg+xml');
         res.send(svgContent);
     } catch (error) {

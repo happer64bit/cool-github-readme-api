@@ -2,7 +2,6 @@ const { Router } = require("express");
 const fs = require('fs').promises;
 const path = require('path');
 const cache = require("apicache").middleware;
-const fetch = require('node-fetch');
 
 require('cachedfs').patchInPlace();
 

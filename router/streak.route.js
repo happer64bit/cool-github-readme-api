@@ -2,6 +2,7 @@ const { Router } = require("express");
 const fs = require('fs').promises;
 const path = require('path');
 const cache = require("apicache").middleware;
+const fetch = require('node-fetch');
 
 require('cachedfs').patchInPlace();
 
@@ -11,15 +12,46 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
     const { username } = req.params;
     const { theme = 'dark', size, border = "797067" } = req.query;
 
+    // GraphQL query to get contributions for the user
+    const query = `
+    {
+        user(login: "${username}") {
+            contributionsCollection {
+                contributionCalendar {
+                    weeks {
+                        contributionDays {
+                            contributionCount
+                            date
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+
     try {
-        // Fetch GitHub contribution data
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(username)}?y=2024`);
+        // Fetch contributions using the GitHub GraphQL API
+        const response = await fetch('https://api.github.com/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.GH_TOKEN}`,
+            },
+            body: JSON.stringify({ query }),
+        });
+
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
-        const contributions = data.contributions;
+        const result = await response.json();
+        const weeks = result.data.user.contributionsCollection.contributionCalendar.weeks;
+        
+        // Flatten the array of contribution days across weeks
+        const contributions = weeks.flatMap(week => week.contributionDays.map(day => ({
+            count: day.contributionCount,
+            date: day.date
+        })));
 
         function calculateStreaks(contributions) {
             if (contributions.length === 0) return 0;
@@ -61,7 +93,7 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
         // Select SVG theme
         const themeFile = theme === 'light' ? 'light.svg' : 'dark.svg';
         const filePath = path.join(__dirname, `./../assets/streak/${themeFile}`);
-        
+
         // Read SVG file asynchronously
         let svgContent = await fs.readFile(filePath, 'utf8');
 

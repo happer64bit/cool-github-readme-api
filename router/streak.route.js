@@ -54,38 +54,36 @@ SteaksRouter.get("/:username", cache("1 minute"), async (req, res) => {
 
         function calculateStreaks(contributions) {
             if (contributions.length === 0) return 0;
-
+        
+            // Filter and sort contributions by date
             const validContributions = contributions
                 .filter(contribution => new Date(contribution.date) <= new Date())
                 .sort((a, b) => new Date(b.date) - new Date(a.date));
-
+        
             let maxStreak = 0;
             let currentStreak = 0;
-
-            for (let i = 0; i < validContributions.length; i++) {
-                const currentContribution = validContributions[i];
-
-                if (currentContribution.count > 0) {
-                    currentStreak = 1;
-                    for (let j = i + 1; j < validContributions.length; j++) {
-                        const prevContribution = validContributions[j - 1];
-                        const nextContribution = validContributions[j];
-
-                        const diff = (new Date(prevContribution.date) - new Date(nextContribution.date)) / (1000 * 60 * 60 * 24);
-
-                        if (diff === 1 && nextContribution.count > 0) {
-                            currentStreak++;
-                        } else {
-                            break;
-                        }
+        
+            for (let i = 0; i < validContributions.length - 1; i++) {
+                const currentDate = new Date(validContributions[i].date);
+                const nextDate = new Date(validContributions[i + 1].date);
+        
+                if (validContributions[i].count > 0) {
+                    currentStreak = currentStreak === 0 ? 1 : currentStreak + 1;
+        
+                    // Check if the difference between consecutive dates is 1 day
+                    const diffInDays = (currentDate - nextDate) / (1000 * 60 * 60 * 24);
+                    if (diffInDays !== 1 || validContributions[i + 1].count === 0) {
+                        maxStreak = Math.max(maxStreak, currentStreak);
+                        currentStreak = 0;
                     }
-                    maxStreak = Math.max(maxStreak, currentStreak);
-                    break;
                 }
             }
-
+        
+            // Final check in case the last streak is the longest
+            maxStreak = Math.max(maxStreak, currentStreak);
+        
             return maxStreak;
-        }
+        }        
 
         const numberOfStreaks = calculateStreaks(contributions);
 

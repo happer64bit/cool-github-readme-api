@@ -1,13 +1,7 @@
 {
-    "extends": "airbnb",
-    "plugins": [
-        "optimize-regex",
-        "immutable",
-        "complexity"
-    ],
-    "rules": {
-        "complexity/comment": [
-            "warn"
-        ]
-    }
+    "extends": [
+        "airbnb",
+        "eslint:recommended",
+        "plugin:node/recommended"
+    ]
 }

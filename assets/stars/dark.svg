@@ -9,13 +9,10 @@
 
     <text x="20" y="155" fill="white" font-family="Tahoma" font-weight="bold" font-size="51">$stars</text>
     <defs>
-        <linearGradient id="41b10cd4" x1="245" y1="5" x2="5" y2="245" gradientUnits="userSpaceOnUse">
+        <linearGradient id="paint0_linear_57_11" x1="240" y1="131.5" x2="50.5" y2="316.5"
+            gradientUnits="userSpaceOnUse">
             <stop />
             <stop offset="1" stop-color="#1A1A1A" />
-        </linearGradient>
-        <linearGradient id="faf29059" x1="50.5" y1="62" x2="50.5" y2="149" gradientUnits="userSpaceOnUse">
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="#999999" />
         </linearGradient>
     </defs>
 </svg>

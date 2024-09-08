@@ -6,6 +6,13 @@
             "destination": "express.js"
         }
     ],
-    "builds": [{ "src": "express.js", "use": "@vercel/node" }],
+    "builds": [
+        { "src": "express.js", "use": "@vercel/node" }
+    ],
+    "build": {
+        "env": {
+            "GO_BUILD_FLAGS": "-ldflags '-s -w'"
+        }      
+    },
     "buildCommand": ""
 }

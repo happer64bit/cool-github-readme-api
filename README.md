@@ -40,3 +40,29 @@ The Cool GitHub README API allows you to generate beautiful, informative, and en
 |  Light  | Dark  |
 | ---|---|
 | ![img](https://cool-github-readme-api.vercel.app/total-downloads/happer64bit/moviesharmal?theme=light)  |  ![img](https://cool-github-readme-api.vercel.app/total-downloads/happer64bit/moviesharmal)  |
+
+## Stars
+
+* You can customize by `https://cool-github-readme-api.vercel.app/stars/<username>?theme=light&size=100`
+
+```markdown
+![My Stars](https://cool-github-readme-api.vercel.app/stars/<username>?theme=light&size=200&border=black)
+```
+
+* Replace `<username>` with your GitHub username.
+
+* `theme (dark default)` - light and dark are available.
+* `size` - Adjust the size of the image. The default is `250`.
+* `border (#797067 default)` - Border color for the card.
+
+| Light | Dark  |
+| ---|---|
+| ![img](https://cool-github-readme-api.vercel.app/stars/happer64bit?theme=light)  |  ![img](https://cool-github-readme-api.vercel.app/stars/happer64bit)  |
+
+### Example Usage
+
+Here's an example of how you can include the "Stars" widget in your README:
+
+```markdown
+![My Stars](https://cool-github-readme-api.vercel.app/stars/happer64bit?theme=light&size=200&border=black)
+```

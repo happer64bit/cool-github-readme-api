@@ -26,11 +26,10 @@ const getSvgTemplate = async (theme) => {
     return svgCache[theme];
 };
 
-// Function to calculate streaks from contributions
 const calculateStreaks = (contributions) => {
     if (contributions.length === 0) return 0;
 
-    // Filter and sort contributions by date
+    // Sort contributions by date descending (latest first)
     const validContributions = contributions
         .filter(contribution => new Date(contribution.date) <= new Date())
         .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -38,26 +37,35 @@ const calculateStreaks = (contributions) => {
     let maxStreak = 0;
     let currentStreak = 0;
 
-    for (let i = 0; i < validContributions.length - 1; i++) {
-        const currentDate = new Date(validContributions[i].date);
-        const nextDate = new Date(validContributions[i + 1].date);
+    for (let i = 0; i < validContributions.length; i++) {
+        const currentContribution = validContributions[i];
+        const nextContribution = validContributions[i + 1];
 
-        if (validContributions[i].count > 0) {
-            currentStreak = currentStreak === 0 ? 1 : currentStreak + 1;
-
-            // Check if the difference between consecutive dates is 1 day
-            const diffInDays = (currentDate - nextDate) / (1000 * 60 * 60 * 24);
-            if (diffInDays !== 1 || validContributions[i + 1].count === 0) {
-                maxStreak = Math.max(maxStreak, currentStreak);
+        if (currentContribution.count > 0) {
+            // If it's the first contribution or there's no gap, increment streak
+            if (currentStreak === 0 || (nextContribution && nextContribution.date === getNextDay(currentContribution.date))) {
+                currentStreak++;
+            } else {
                 currentStreak = 0;
             }
+        } else {
+            // Reset streak if current contribution has no count
+            currentStreak = 0;
         }
+
+        // Update maxStreak at the end of each iteration
+        maxStreak = Math.max(maxStreak, currentStreak);
     }
 
-    // Final check for the last streak
-    maxStreak = Math.max(maxStreak, currentStreak);
     return maxStreak;
 };
+
+// Helper function to get the next day's date
+function getNextDay(dateString) {
+    const date = new Date(dateString);
+    date.setDate(date.getDate() + 1);
+    return date.toISOString().split('T')[0]; // Extract date part only
+}
 
 // Cache GraphQL responses for 5 minutes
 const graphqlCache = new Map();
